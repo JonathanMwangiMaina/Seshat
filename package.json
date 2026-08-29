@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "20.20.2",
-    "npm": "10.9.2"
+    "node": "24.x",
+    "npm": "11.x"
   },
   "scripts": {
     "dev": "NODE_ENV=development next dev --turbopack -p 9002",
