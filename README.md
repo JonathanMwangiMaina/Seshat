@@ -6,7 +6,7 @@
 [![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel&logoColor=white)](https://vercel.com)
 [![npm](https://img.shields.io/badge/npm-11.x-red?logo=npm)](https://www.npmjs.com/)
 [![Node.js](https://img.shields.io/badge/Node.js-24.x-green?logo=node.js)](https://nodejs.org/)
-[![Version](https://img.shields.io/badge/Version-1.1.0-blue?logo=semver)](https://github.com/JonathanMwangiMaina/retailpass/releases)
+[![Version](https://img.shields.io/badge/Version-1.2.0-blue?logo=semver)](https://github.com/JonathanMwangiMaina/retailpass/releases)
 
 A modern authentication platform built with Next.js 16 that provides secure user registration, login, and profile management with intelligent password strength analysis. RetailPass delivers real-time password security feedback using algorithmic validation, helping users create stronger credentials.
 
