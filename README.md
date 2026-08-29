@@ -22,7 +22,7 @@ A modern authentication platform built with Next.js 16 that provides secure user
 
 Seshat follows a modern Next.js Pages Router architecture with a full-stack backend:
 
-### 1. **Authentication Backend**: Production-ready authentication system with PostgreSQL/Supabase database, Prisma ORM 6 with driver adapters, JWT tokens in HTTP-only cookies, and bcrypt password hashing. All authentication state managed server-side with secure session handling.
+### 1. Authentication Backend: Production-ready authentication system with PostgreSQL/Supabase database, Prisma ORM 6 with driver adapters, JWT tokens in HTTP-only cookies, and bcrypt password hashing. All authentication state managed server-side with secure session handling.
 
 2. **Database Layer**: Prisma ORM 6 with PostgreSQL driver adapter (`@prisma/adapter-pg`) connecting to Supabase managed database. Connection pooling for optimal performance. User data persisted with proper migrations and type-safe queries.
 
