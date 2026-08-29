@@ -1,7 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { requireAuth } from '@/lib/middleware';
 import { prisma } from '@/lib/prisma';
-import type { UpdateProfileRequest, UpdateProfileResponse, ErrorResponse } from '@/types/api';
+import type { ErrorResponse, UpdateProfileRequest, UpdateProfileResponse } from '@/types/api';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
@@ -52,7 +52,10 @@ export default async function handler(
         id: true,
         email: true,
         name: true,
+        role: true,
         emailVerified: true,
+        resetToken: true,
+        resetTokenExpiry: true,
         createdAt: true,
         updatedAt: true,
       },

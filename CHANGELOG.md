@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - Architecture Decision Records (ADRs) in `docs/adr/`
 - Consolidated test suite in `tests/` directory
 - Role-based access control with ADMIN, VENDOR, CUSTOMER roles
@@ -16,12 +17,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive error handling for Prisma database errors
 
 ### Changed
+
 - Moved test scripts from project root to `tests/integration/`
 - Updated documentation to remove exposed file paths and secrets
 - Enhanced signup validation with role validation
 - Improved middleware authentication error handling
 
 ### Fixed
+
 - User registration flow for all three roles (ADMIN, VENDOR, CUSTOMER)
 - Route protection middleware consistency
 - Password update validation (prevents same password reuse)
@@ -30,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2026-08-29
 
 ### Added
+
 - Initial RetailPass authentication platform
 - Next.js 15 with Pages Router and Turbopack
 - JWT authentication with HTTP-only cookies
@@ -45,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tailwind CSS styling
 
 ### Security
+
 - HTTP-only, Secure, SameSite=Strict cookies
 - bcrypt password hashing
 - JWT token signing with HS256

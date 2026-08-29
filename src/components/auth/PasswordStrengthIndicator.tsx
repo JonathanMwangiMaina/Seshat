@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Progress } from "@/components/ui/progress";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, XCircle, AlertTriangle } from "lucide-react";
-import type { AnalyzePasswordStrengthOutput } from "@/types/password-strength";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import type { AnalyzePasswordStrengthOutput } from '@/types/password-strength';
+import { AlertTriangle, CheckCircle } from 'lucide-react';
 
 interface PasswordStrengthIndicatorProps {
   analysis: AnalyzePasswordStrengthOutput | null;
@@ -11,14 +11,17 @@ interface PasswordStrengthIndicatorProps {
 }
 
 const strengthMap: Record<string, { color: string; value: number; label: string }> = {
-  "very weak": { color: "bg-red-500", value: 20, label: "Very Weak" },
-  "weak": { color: "bg-orange-500", value: 40, label: "Weak" },
-  "moderate": { color: "bg-yellow-500", value: 60, label: "Moderate" },
-  "strong": { color: "bg-blue-500", value: 80, label: "Strong" },
-  "very strong": { color: "bg-green-500", value: 100, label: "Very Strong" },
+  'very weak': { color: 'bg-red-500', value: 20, label: 'Very Weak' },
+  weak: { color: 'bg-orange-500', value: 40, label: 'Weak' },
+  moderate: { color: 'bg-yellow-500', value: 60, label: 'Moderate' },
+  strong: { color: 'bg-blue-500', value: 80, label: 'Strong' },
+  'very strong': { color: 'bg-green-500', value: 100, label: 'Very Strong' },
 };
 
-export default function PasswordStrengthIndicator({ analysis, isLoading }: PasswordStrengthIndicatorProps) {
+export default function PasswordStrengthIndicator({
+  analysis,
+  isLoading,
+}: PasswordStrengthIndicatorProps) {
   if (isLoading) {
     return <p className="text-sm text-muted-foreground mt-2">Analyzing password...</p>;
   }
@@ -27,13 +30,20 @@ export default function PasswordStrengthIndicator({ analysis, isLoading }: Passw
     return null;
   }
 
-  const strengthInfo = strengthMap[analysis.strength.toLowerCase()] || { color: "bg-gray-500", value: 0, label: "Unknown" };
+  const strengthInfo = strengthMap[analysis.strength.toLowerCase()] || {
+    color: 'bg-gray-500',
+    value: 0,
+    label: 'Unknown',
+  };
 
   return (
     <Card className="mt-4 border-border/50 shadow-sm">
       <CardHeader className="pb-2 pt-4">
         <CardTitle className="text-base flex items-center">
-          Password Strength: <span className={`ml-2 font-semibold ${strengthInfo.color.replace('bg-', 'text-')}`}>{strengthInfo.label}</span>
+          Password Strength:{' '}
+          <span className={`ml-2 font-semibold ${strengthInfo.color.replace('bg-', 'text-')}`}>
+            {strengthInfo.label}
+          </span>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3 pb-4">

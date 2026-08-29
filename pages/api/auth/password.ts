@@ -1,8 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { requireAuth } from '@/lib/middleware';
+import { comparePassword, hashPassword } from '@/lib/password';
 import { prisma } from '@/lib/prisma';
-import { hashPassword, comparePassword } from '@/lib/password';
-import type { UpdatePasswordRequest, UpdatePasswordResponse, ErrorResponse } from '@/types/api';
+import type { ErrorResponse, UpdatePasswordRequest, UpdatePasswordResponse } from '@/types/api';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,

@@ -32,7 +32,7 @@ export function analyzePasswordStrength(password: string): AnalyzePasswordStreng
   // Common patterns check
   const commonPatterns = ['123', 'abc', 'password', 'qwerty', '111', '000'];
   const lowerPassword = password.toLowerCase();
-  const hasCommonPattern = commonPatterns.some(pattern => lowerPassword.includes(pattern));
+  const hasCommonPattern = commonPatterns.some((pattern) => lowerPassword.includes(pattern));
   if (hasCommonPattern) {
     score -= 2;
     suggestions.push('Avoid common patterns and sequences');

@@ -1,8 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '@/lib/prisma';
-import { hashPassword, comparePassword } from '@/lib/password';
 import { requireAuth } from '@/lib/middleware';
-import type { UpdatePasswordRequest, UpdatePasswordResponse, ErrorResponse } from '@/types/api';
+import { comparePassword, hashPassword } from '@/lib/password';
+import { prisma } from '@/lib/prisma';
+import type { ErrorResponse, UpdatePasswordRequest, UpdatePasswordResponse } from '@/types/api';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,12 +21,12 @@ export default async function handler(
       return;
     }
 
-    const { oldPassword, newPassword } = req.body as UpdatePasswordRequest;
+    const { currentPassword, newPassword } = req.body as UpdatePasswordRequest;
 
     // Validate required fields
-    if (!oldPassword || !newPassword) {
+    if (!currentPassword || !newPassword) {
       return res.status(400).json({
-        error: 'Old password and new password are required',
+        error: 'Current password and new password are required',
       });
     }
 
@@ -38,9 +38,9 @@ export default async function handler(
     }
 
     // Validate new password is different from old password
-    if (oldPassword === newPassword) {
+    if (currentPassword === newPassword) {
       return res.status(400).json({
-        error: 'New password must be different from old password',
+        error: 'New password must be different from current password',
       });
     }
 
@@ -59,8 +59,8 @@ export default async function handler(
       });
     }
 
-    // Verify old password
-    const isPasswordValid = await comparePassword(oldPassword, currentUser.passwordHash);
+    // Verify current password
+    const isPasswordValid = await comparePassword(currentPassword, currentUser.passwordHash);
     if (!isPasswordValid) {
       return res.status(401).json({
         error: 'Current password is incorrect',

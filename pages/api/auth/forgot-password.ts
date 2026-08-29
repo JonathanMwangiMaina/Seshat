@@ -1,8 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '@/lib/prisma';
 import { sendPasswordResetEmail } from '@/lib/email';
+import { prisma } from '@/lib/prisma';
+import type { ErrorResponse, ForgotPasswordRequest, ForgotPasswordResponse } from '@/types/api';
 import crypto from 'crypto';
-import type { ForgotPasswordRequest, ForgotPasswordResponse, ErrorResponse } from '@/types/api';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,

@@ -1,8 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { User } from '@prisma/client';
 import { parse } from 'cookie';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { verifyToken } from './auth';
 import { prisma } from './prisma';
-import type { User } from '@prisma/client';
 
 export interface AuthenticatedRequest extends NextApiRequest {
   user?: Omit<User, 'passwordHash'>;
@@ -11,12 +11,12 @@ export interface AuthenticatedRequest extends NextApiRequest {
 /**
  * Middleware to authenticate API requests using JWT from cookies
  * @param req - Next.js API request
- * @param res - Next.js API response
+ * @param _res - Next.js API response (unused but kept for consistency)
  * @returns Authenticated user or null if not authenticated
  */
 export async function authenticateRequest(
   req: NextApiRequest,
-  res: NextApiResponse
+  _res: NextApiResponse
 ): Promise<Omit<User, 'passwordHash'> | null> {
   try {
     // Parse cookies from request
@@ -42,6 +42,8 @@ export async function authenticateRequest(
         name: true,
         role: true,
         emailVerified: true,
+        resetToken: true,
+        resetTokenExpiry: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -62,11 +64,11 @@ export async function requireAuth(
   res: NextApiResponse
 ): Promise<Omit<User, 'passwordHash'> | null> {
   const user = await authenticateRequest(req, res);
-  
+
   if (!user) {
     res.status(401).json({ error: 'Unauthorized - Please log in' });
     return null;
   }
-  
+
   return user;
 }

@@ -68,6 +68,7 @@ npx prisma studio
 ```
 
 Or direct SQL:
+
 ```sql
 SELECT id, email, name, role, "emailVerified", "createdAt"
 FROM "User"
@@ -77,6 +78,7 @@ ORDER BY "createdAt" DESC;
 ## 5. Expected Results
 
 ### Signup Response
+
 ```json
 {
   "user": {
@@ -92,6 +94,7 @@ ORDER BY "createdAt" DESC;
 ```
 
 ### Update Password Success
+
 ```json
 {
   "message": "Password updated successfully"
@@ -99,6 +102,7 @@ ORDER BY "createdAt" DESC;
 ```
 
 ### Delete Profile Success
+
 ```json
 {
   "message": "Profile deleted successfully"
@@ -107,13 +111,13 @@ ORDER BY "createdAt" DESC;
 
 ## 6. Common Errors
 
-| Error | Status | Cause |
-|-------|--------|-------|
-| "Invalid role..." | 400 | Role not ADMIN/VENDOR/CUSTOMER |
-| "Password must be at least 8..." | 400 | Password too short |
-| "Current password is incorrect" | 401 | Wrong old password |
-| "Unauthorized - Please log in" | 401 | Missing auth cookie |
-| "An account with this email..." | 409 | Duplicate email |
+| Error                            | Status | Cause                          |
+| -------------------------------- | ------ | ------------------------------ |
+| "Invalid role..."                | 400    | Role not ADMIN/VENDOR/CUSTOMER |
+| "Password must be at least 8..." | 400    | Password too short             |
+| "Current password is incorrect"  | 401    | Wrong old password             |
+| "Unauthorized - Please log in"   | 401    | Missing auth cookie            |
+| "An account with this email..."  | 409    | Duplicate email                |
 
 ## 7. Cleanup
 

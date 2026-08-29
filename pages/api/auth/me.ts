@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { authenticateRequest } from '@/lib/middleware';
-import type { MeResponse, ErrorResponse } from '@/types/api';
+import type { ErrorResponse, MeResponse } from '@/types/api';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,

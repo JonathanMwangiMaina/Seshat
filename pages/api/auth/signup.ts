@@ -1,9 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { serialize } from 'cookie';
-import { prisma } from '@/lib/prisma';
-import { hashPassword } from '@/lib/password';
 import { signToken } from '@/lib/auth';
-import type { SignupRequest, SignupResponse, ErrorResponse } from '@/types/api';
+import { hashPassword } from '@/lib/password';
+import { prisma } from '@/lib/prisma';
+import type { ErrorResponse, SignupRequest, SignupResponse } from '@/types/api';
+import { serialize } from 'cookie';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
@@ -82,6 +82,8 @@ export default async function handler(
         name: true,
         role: true,
         emailVerified: true,
+        resetToken: true,
+        resetTokenExpiry: true,
         createdAt: true,
         updatedAt: true,
       },

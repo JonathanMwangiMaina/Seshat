@@ -1,17 +1,24 @@
-"use client";
+'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import AuthFormWrapper from '@/components/shared/AuthFormWrapper';
-import { Mail, Loader2, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import type { ForgotPasswordRequest } from '@/types/api';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowLeft, CheckCircle, Loader2, Mail } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 const forgotPasswordSchema = z.object({
   email: z.string().email({ message: 'Invalid email address.' }),
@@ -85,7 +92,8 @@ export default function ForgotPasswordPage() {
           <Alert className="border-green-200 bg-green-50 text-green-800">
             <CheckCircle className="h-4 w-4" />
             <AlertDescription>
-              If an account with that email exists, a password reset link has been sent. Please check your inbox.
+              If an account with that email exists, a password reset link has been sent. Please
+              check your inbox.
             </AlertDescription>
           </Alert>
         )}

@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import type { ReactNode } from 'react';
 
 interface AuthFormWrapperProps {
   title: string;
@@ -14,13 +14,9 @@ export default function AuthFormWrapper({ title, children, footer }: AuthFormWra
         <CardHeader>
           <CardTitle className="text-center text-3xl font-headline">{title}</CardTitle>
         </CardHeader>
-        <CardContent>
-          {children}
-        </CardContent>
+        <CardContent>{children}</CardContent>
         {footer && (
-          <div className="p-6 pt-0 text-center text-sm text-muted-foreground">
-            {footer}
-          </div>
+          <div className="p-6 pt-0 text-center text-sm text-muted-foreground">{footer}</div>
         )}
       </Card>
     </div>

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export default function HomePage() {
   const { user, initialLoading } = useAuth();

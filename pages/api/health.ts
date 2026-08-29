@@ -1,5 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 interface HealthResponse {
   status: 'healthy' | 'degraded' | 'unhealthy';
@@ -22,10 +22,7 @@ interface HealthResponse {
   warnings?: string[];
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<HealthResponse>
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<HealthResponse>) {
   const warnings: string[] = [];
   let overallStatus: 'healthy' | 'degraded' | 'unhealthy' = 'healthy';
 
@@ -40,18 +37,20 @@ export default async function handler(
   }
 
   if (!hasSupabaseURL && !hasDatabaseURL) {
-    warnings.push('Database connection not available - no DATABASE_URL or SUPABASE_DATABASE_URL configured');
+    warnings.push(
+      'Database connection not available - no DATABASE_URL or SUPABASE_DATABASE_URL configured'
+    );
     overallStatus = 'unhealthy';
   }
 
   // Test database connectivity
-  let databaseStatus = {
+  const databaseStatus = {
     connected: false,
     type: undefined as string | undefined,
     error: undefined as string | undefined,
   };
 
-  let prismaStatus = {
+  const prismaStatus = {
     initialized: false,
     error: undefined as string | undefined,
   };

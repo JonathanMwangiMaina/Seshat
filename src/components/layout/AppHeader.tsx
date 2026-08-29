@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from 'next/link';
-import { ShieldCheck, LogIn, UserPlus, UserCog, LogOut } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/useAuth';
+import { LogIn, LogOut, ShieldCheck, UserCog, UserPlus } from 'lucide-react';
+import Link from 'next/link';
 
 const AppHeader = () => {
   const { user, logout, initialLoading } = useAuth();

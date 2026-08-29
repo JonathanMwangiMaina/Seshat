@@ -1,9 +1,9 @@
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import AuthFormWrapper from '@/components/shared/AuthFormWrapper';
 import LoginForm from '@/components/auth/LoginForm';
+import AuthFormWrapper from '@/components/shared/AuthFormWrapper';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function LoginPage() {
   const { user, initialLoading } = useAuth();
@@ -30,7 +30,14 @@ export default function LoginPage() {
   return (
     <AuthFormWrapper
       title="Welcome Back"
-      footer={<>Don't have an account? <Link href="/signup" className="text-primary hover:underline">Sign up</Link></>}
+      footer={
+        <>
+          Don't have an account?{' '}
+          <Link href="/signup" className="text-primary hover:underline">
+            Sign up
+          </Link>
+        </>
+      }
     >
       <LoginForm />
     </AuthFormWrapper>

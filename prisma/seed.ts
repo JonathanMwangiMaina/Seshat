@@ -1,10 +1,10 @@
-import 'dotenv/config';
 import { config } from 'dotenv';
+import 'dotenv/config';
 import { resolve } from 'path';
 config({ path: resolve(__dirname, '../.env.local') });
 
-import { prisma } from '../src/lib/prisma';
 import bcrypt from 'bcryptjs';
+import { prisma } from '../src/lib/prisma';
 
 async function main() {
   console.log('Seeding demo users...');

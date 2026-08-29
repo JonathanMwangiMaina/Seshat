@@ -5,12 +5,14 @@ This guide provides comprehensive testing for the user management functionality 
 ## Prerequisites
 
 1. Run the database migration:
+
 ```bash
 cd /workspace/claude-workspace/jonathanmainast29_yahoo.com/JonathanMwangiMaina/retailpass
 npx prisma migrate dev
 ```
 
 2. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -20,6 +22,7 @@ npm run dev
 ### 1. Test Signup with Different Roles
 
 #### Test 1.1: Create CUSTOMER (Default Role)
+
 ```bash
 curl -X POST http://localhost:3000/api/auth/signup \
   -H "Content-Type: application/json" \
@@ -33,11 +36,13 @@ curl -X POST http://localhost:3000/api/auth/signup \
 ```
 
 **Expected Response:**
+
 - Status: 201 Created
 - Body includes: `{ "user": { "id": "...", "email": "customer@test.com", "name": "Test Customer", "role": "CUSTOMER", ... } }`
 - Sets auth cookie
 
 #### Test 1.2: Create VENDOR
+
 ```bash
 curl -X POST http://localhost:3000/api/auth/signup \
   -H "Content-Type: application/json" \
@@ -52,10 +57,12 @@ curl -X POST http://localhost:3000/api/auth/signup \
 ```
 
 **Expected Response:**
+
 - Status: 201 Created
 - Body includes: `{ "user": { ..., "role": "VENDOR", ... } }`
 
 #### Test 1.3: Create ADMIN
+
 ```bash
 curl -X POST http://localhost:3000/api/auth/signup \
   -H "Content-Type: application/json" \
@@ -70,10 +77,12 @@ curl -X POST http://localhost:3000/api/auth/signup \
 ```
 
 **Expected Response:**
+
 - Status: 201 Created
 - Body includes: `{ "user": { ..., "role": "ADMIN", ... } }`
 
 #### Test 1.4: Invalid Role
+
 ```bash
 curl -X POST http://localhost:3000/api/auth/signup \
   -H "Content-Type: application/json" \
@@ -86,6 +95,7 @@ curl -X POST http://localhost:3000/api/auth/signup \
 ```
 
 **Expected Response:**
+
 - Status: 400 Bad Request
 - Body: `{ "error": "Invalid role. Must be ADMIN, VENDOR, or CUSTOMER" }`
 
@@ -103,12 +113,14 @@ curl -X POST http://localhost:3000/api/auth/login \
 ```
 
 **Expected Response:**
+
 - Status: 200 OK
 - Body includes role: `{ "user": { ..., "role": "VENDOR", ... } }`
 
 ### 3. Test Update Password
 
 #### Test 3.1: Successful Password Update
+
 ```bash
 curl -X PUT http://localhost:3000/api/profile/update-password \
   -H "Content-Type: application/json" \
@@ -121,10 +133,12 @@ curl -X PUT http://localhost:3000/api/profile/update-password \
 ```
 
 **Expected Response:**
+
 - Status: 200 OK
 - Body: `{ "message": "Password updated successfully" }`
 
 #### Test 3.2: Verify New Password Works
+
 ```bash
 curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
@@ -136,10 +150,12 @@ curl -X POST http://localhost:3000/api/auth/login \
 ```
 
 **Expected Response:**
+
 - Status: 200 OK
 - Login successful
 
 #### Test 3.3: Incorrect Old Password
+
 ```bash
 curl -X PUT http://localhost:3000/api/profile/update-password \
   -H "Content-Type: application/json" \
@@ -152,10 +168,12 @@ curl -X PUT http://localhost:3000/api/profile/update-password \
 ```
 
 **Expected Response:**
+
 - Status: 401 Unauthorized
 - Body: `{ "error": "Current password is incorrect" }`
 
 #### Test 3.4: Unauthenticated Request
+
 ```bash
 curl -X PUT http://localhost:3000/api/profile/update-password \
   -H "Content-Type: application/json" \
@@ -167,10 +185,12 @@ curl -X PUT http://localhost:3000/api/profile/update-password \
 ```
 
 **Expected Response:**
+
 - Status: 401 Unauthorized
 - Body: `{ "error": "Unauthorized - Please log in" }`
 
 #### Test 3.5: Same Old and New Password
+
 ```bash
 curl -X PUT http://localhost:3000/api/profile/update-password \
   -H "Content-Type: application/json" \
@@ -183,10 +203,12 @@ curl -X PUT http://localhost:3000/api/profile/update-password \
 ```
 
 **Expected Response:**
+
 - Status: 400 Bad Request
 - Body: `{ "error": "New password must be different from old password" }`
 
 #### Test 3.6: Weak New Password
+
 ```bash
 curl -X PUT http://localhost:3000/api/profile/update-password \
   -H "Content-Type: application/json" \
@@ -199,12 +221,14 @@ curl -X PUT http://localhost:3000/api/profile/update-password \
 ```
 
 **Expected Response:**
+
 - Status: 400 Bad Request
 - Body: `{ "error": "New password must be at least 8 characters long" }`
 
 ### 4. Test Profile Deletion
 
 #### Test 4.1: Successful Profile Deletion
+
 ```bash
 curl -X DELETE http://localhost:3000/api/profile/delete \
   -b cookies-admin.txt \
@@ -212,11 +236,13 @@ curl -X DELETE http://localhost:3000/api/profile/delete \
 ```
 
 **Expected Response:**
+
 - Status: 200 OK
 - Body: `{ "message": "Profile deleted successfully" }`
 - Auth cookie cleared
 
 #### Test 4.2: Verify User Cannot Login After Deletion
+
 ```bash
 curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
@@ -228,28 +254,33 @@ curl -X POST http://localhost:3000/api/auth/login \
 ```
 
 **Expected Response:**
+
 - Status: 401 Unauthorized
 - Body: `{ "error": "Invalid email or password" }`
 
 #### Test 4.3: Unauthenticated Deletion Request
+
 ```bash
 curl -X DELETE http://localhost:3000/api/profile/delete \
   -v
 ```
 
 **Expected Response:**
+
 - Status: 401 Unauthorized
 - Body: `{ "error": "Unauthorized - Please log in" }`
 
 ### 5. Test Database Persistence
 
 #### Test 5.1: Direct Database Query (After Migration)
+
 ```bash
 cd /workspace/claude-workspace/jonathanmainast29_yahoo.com/JonathanMwangiMaina/retailpass
 npx prisma studio
 ```
 
 Or use SQL:
+
 ```sql
 SELECT id, email, name, role, "emailVerified", "createdAt", "updatedAt"
 FROM "User"
@@ -257,32 +288,35 @@ ORDER BY "createdAt" DESC;
 ```
 
 **Expected Results:**
+
 - All users visible with their roles
 - CUSTOMER role for users created without explicit role
 - VENDOR and ADMIN roles for explicitly created users
 
 ## API Endpoints Summary
 
-| Endpoint | Method | Auth Required | Purpose |
-|----------|--------|---------------|---------|
-| `/api/auth/signup` | POST | No | Create new user with optional role |
-| `/api/auth/login` | POST | No | Login and get auth token |
-| `/api/profile/update-password` | PUT/PATCH | Yes | Update user password |
-| `/api/profile/delete` | DELETE | Yes | Delete user profile |
+| Endpoint                       | Method    | Auth Required | Purpose                            |
+| ------------------------------ | --------- | ------------- | ---------------------------------- |
+| `/api/auth/signup`             | POST      | No            | Create new user with optional role |
+| `/api/auth/login`              | POST      | No            | Login and get auth token           |
+| `/api/profile/update-password` | PUT/PATCH | Yes           | Update user password               |
+| `/api/profile/delete`          | DELETE    | Yes           | Delete user profile                |
 
 ## Request/Response Examples
 
 ### Signup Request
+
 ```json
 {
   "email": "user@example.com",
   "password": "securepassword123",
   "name": "John Doe",
-  "role": "VENDOR"  // Optional: ADMIN, VENDOR, or CUSTOMER (default)
+  "role": "VENDOR" // Optional: ADMIN, VENDOR, or CUSTOMER (default)
 }
 ```
 
 ### Signup Response (Success)
+
 ```json
 {
   "user": {
@@ -298,6 +332,7 @@ ORDER BY "createdAt" DESC;
 ```
 
 ### Update Password Request
+
 ```json
 {
   "oldPassword": "currentpassword123",
@@ -306,6 +341,7 @@ ORDER BY "createdAt" DESC;
 ```
 
 ### Update Password Response (Success)
+
 ```json
 {
   "message": "Password updated successfully"
@@ -313,6 +349,7 @@ ORDER BY "createdAt" DESC;
 ```
 
 ### Delete Profile Response (Success)
+
 ```json
 {
   "message": "Profile deleted successfully"
@@ -322,6 +359,7 @@ ORDER BY "createdAt" DESC;
 ## Error Responses
 
 All error responses follow this format:
+
 ```json
 {
   "error": "Error message description"
@@ -329,6 +367,7 @@ All error responses follow this format:
 ```
 
 Common status codes:
+
 - `400` - Bad Request (validation error)
 - `401` - Unauthorized (authentication required or invalid credentials)
 - `404` - Not Found (user doesn't exist)

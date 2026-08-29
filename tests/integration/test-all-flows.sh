@@ -208,7 +208,7 @@ test_password_update() {
   response=$(curl -s -X PUT "$API_URL/api/profile/update-password" \
     -H "Content-Type: application/json" \
     -b "$cookie_file" \
-    -d "{\"oldPassword\":\"$old_password\",\"newPassword\":\"$new_password\"}" \
+    -d "{\"currentPassword\":\"$old_password\",\"newPassword\":\"$new_password\"}" \
     -w "\n%{http_code}")
 
   local http_code

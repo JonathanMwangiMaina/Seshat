@@ -1,7 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '@/lib/prisma';
 import { hashPassword } from '@/lib/password';
-import type { ResetPasswordRequest, ResetPasswordResponse, ErrorResponse } from '@/types/api';
+import { prisma } from '@/lib/prisma';
+import type { ErrorResponse, ResetPasswordRequest, ResetPasswordResponse } from '@/types/api';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
@@ -42,7 +42,9 @@ export default async function handler(
 
     // Check if token has expired
     if (!user.resetTokenExpiry || user.resetTokenExpiry < new Date()) {
-      return res.status(400).json({ error: 'Reset token has expired. Please request a new password reset.' });
+      return res
+        .status(400)
+        .json({ error: 'Reset token has expired. Please request a new password reset.' });
     }
 
     // Hash the new password

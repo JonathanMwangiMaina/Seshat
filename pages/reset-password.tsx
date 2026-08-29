@@ -1,29 +1,38 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import AuthFormWrapper from '@/components/shared/AuthFormWrapper';
 import PasswordStrengthIndicator from '@/components/auth/PasswordStrengthIndicator';
+import AuthFormWrapper from '@/components/shared/AuthFormWrapper';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { useDebounce } from '@/hooks/useDebounce';
-import { LockKeyhole, Loader2, CheckCircle, AlertTriangle } from 'lucide-react';
 import type { ResetPasswordRequest } from '@/types/api';
 import type { AnalyzePasswordStrengthOutput } from '@/types/password-strength';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { AlertTriangle, CheckCircle, Loader2, LockKeyhole } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
-const resetPasswordSchema = z.object({
-  newPassword: z.string().min(8, { message: 'Password must be at least 8 characters.' }),
-  confirmPassword: z.string(),
-}).refine(data => data.newPassword === data.confirmPassword, {
-  message: "Passwords don't match.",
-  path: ["confirmPassword"],
-});
+const resetPasswordSchema = z
+  .object({
+    newPassword: z.string().min(8, { message: 'Password must be at least 8 characters.' }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords don't match.",
+    path: ['confirmPassword'],
+  });
 
 type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
@@ -34,7 +43,9 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [passwordStrength, setPasswordStrength] = useState<AnalyzePasswordStrengthOutput | null>(null);
+  const [passwordStrength, setPasswordStrength] = useState<AnalyzePasswordStrengthOutput | null>(
+    null
+  );
   const [strengthLoading, setStrengthLoading] = useState(false);
 
   const form = useForm<ResetPasswordFormValues>({
@@ -76,7 +87,7 @@ export default function ResetPasswordPage() {
           const result = await response.json();
           setPasswordStrength(result);
         } catch (error) {
-          console.error("Error analyzing password strength:", error);
+          console.error('Error analyzing password strength:', error);
           setPasswordStrength(null);
         } finally {
           setStrengthLoading(false);

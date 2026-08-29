@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfileForm from '@/components/profile/ProfileForm';
 import UpdatePasswordForm from '@/components/profile/UpdatePasswordForm';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useAuth } from '@/hooks/useAuth';
 import { Loader2, UserCog } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export default function ProfilePage() {
-  const { user, initialLoading, loading: authLoading } = useAuth();
+  const { user, initialLoading } = useAuth();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

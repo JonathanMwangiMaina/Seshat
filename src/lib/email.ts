@@ -41,5 +41,5 @@ export async function sendPasswordResetEmail(email: string, resetToken: string):
   console.log('==============================================\n');
 
   // Simulate async email sending
-  await new Promise(resolve => setTimeout(resolve, 100));
+  await new Promise((resolve) => setTimeout(resolve, 100));
 }

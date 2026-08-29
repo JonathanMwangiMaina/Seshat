@@ -58,6 +58,7 @@ This is your PostgreSQL connection string from Supabase.
 6. Replace `[YOUR-PASSWORD]` with your actual database password (set when creating the project)
 
 Example format:
+
 ```
 postgresql://postgres.xxxxx:YourPassword123@aws-0-eu-west-1.pooler.supabase.com:5432/postgres
 ```
@@ -93,10 +94,10 @@ This is the MOST CRITICAL step. Missing environment variables are the #1 cause o
 1. In the Vercel import screen, expand **Environment Variables**
 2. Add each variable one by one:
 
-   | Name | Value | Notes |
-   |------|-------|-------|
-   | `JWT_SECRET` | Your generated secret | Use the output from crypto command above |
-   | `SUPABASE_DATABASE_URL` | Your Supabase connection string | Must include password |
+   | Name                    | Value                           | Notes                                    |
+   | ----------------------- | ------------------------------- | ---------------------------------------- |
+   | `JWT_SECRET`            | Your generated secret           | Use the output from crypto command above |
+   | `SUPABASE_DATABASE_URL` | Your Supabase connection string | Must include password                    |
 
 3. **IMPORTANT**: Make sure each variable is set for all environments:
    - ✅ Production
@@ -164,10 +165,7 @@ The health endpoint provides diagnostic information about your deployment.
   "status": "degraded",
   "timestamp": "2026-05-31T12:00:00.000Z",
   "environment": "production",
-  "warnings": [
-    "JWT_SECRET is not configured - authentication will fail",
-    "Database connection not available"
-  ],
+  "warnings": ["JWT_SECRET is not configured - authentication will fail", "Database connection not available"],
   "environmentVariables": {
     "JWT_SECRET": "missing",
     "DATABASE_URL": "missing",
@@ -199,6 +197,7 @@ Try creating a test user:
 ### Issue 1: "Internal server error" on signup/login
 
 **Symptoms:**
+
 - Signup or login returns 500 error
 - Health endpoint shows missing environment variables
 
@@ -212,6 +211,7 @@ Try creating a test user:
 4. After adding variables, click **Redeploy** (don't just save)
 
 **Quick check:**
+
 ```bash
 # Visit your health endpoint
 curl https://your-app.vercel.app/api/health
@@ -224,6 +224,7 @@ curl https://your-app.vercel.app/api/health
 ### Issue 2: Database connection errors
 
 **Symptoms:**
+
 - Error: "Can't reach database server"
 - Health endpoint shows `"connected": false`
 
@@ -246,6 +247,7 @@ curl https://your-app.vercel.app/api/health
 ### Issue 3: JWT_SECRET validation fails
 
 **Symptoms:**
+
 - Error: "JWT_SECRET is required but not configured"
 - Authentication fails even with token
 
@@ -259,6 +261,7 @@ curl https://your-app.vercel.app/api/health
 ### Issue 4: Build succeeds but runtime errors
 
 **Symptoms:**
+
 - Build completes successfully
 - Application crashes when accessed
 - Signup/login endpoints fail
@@ -266,6 +269,7 @@ curl https://your-app.vercel.app/api/health
 **Why this happens:**
 
 As of commit `b4e637e`, JWT_SECRET validation was moved from build-time to runtime. This means:
+
 - ✅ Build will succeed even without JWT_SECRET
 - ❌ Application will fail at runtime when users try to authenticate
 
@@ -278,6 +282,7 @@ As of commit `b4e637e`, JWT_SECRET validation was moved from build-time to runti
 ### Issue 5: Changes not reflecting after deployment
 
 **Symptoms:**
+
 - Updated environment variables
 - Changes don't appear in application
 
@@ -298,17 +303,20 @@ As of commit `b4e637e`, JWT_SECRET validation was moved from build-time to runti
 ### Issue 6: Prisma migration errors
 
 **Symptoms:**
+
 - Error: "Table 'User' does not exist"
 - Database queries fail
 
 **Solution:**
 
 1. **Push schema to Supabase:**
+
    ```bash
    SUPABASE_DATABASE_URL="your-url" npx prisma db push
    ```
 
 2. **Or run migrations:**
+
    ```bash
    SUPABASE_DATABASE_URL="your-url" npx prisma migrate deploy
    ```
@@ -342,6 +350,7 @@ If you're still experiencing issues:
    - Share the response when asking for help
 
 3. **Verify Environment:**
+
    ```bash
    # Check what Vercel sees
    vercel env ls
@@ -349,12 +358,12 @@ If you're still experiencing issues:
 
 4. **Common Error Messages:**
 
-   | Error | Cause | Fix |
-   |-------|-------|-----|
-   | "JWT_SECRET is required" | Missing JWT_SECRET | Add environment variable |
-   | "Can't reach database" | Wrong database URL | Verify SUPABASE_DATABASE_URL |
-   | "Table does not exist" | Missing migrations | Run `prisma db push` |
-   | "Invalid signature" | JWT_SECRET mismatch | Ensure same secret across deployments |
+   | Error                    | Cause               | Fix                                   |
+   | ------------------------ | ------------------- | ------------------------------------- |
+   | "JWT_SECRET is required" | Missing JWT_SECRET  | Add environment variable              |
+   | "Can't reach database"   | Wrong database URL  | Verify SUPABASE_DATABASE_URL          |
+   | "Table does not exist"   | Missing migrations  | Run `prisma db push`                  |
+   | "Invalid signature"      | JWT_SECRET mismatch | Ensure same secret across deployments |
 
 ## Best Practices
 

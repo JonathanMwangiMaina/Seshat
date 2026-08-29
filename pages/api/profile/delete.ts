@@ -1,8 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { serialize } from 'cookie';
-import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/middleware';
+import { prisma } from '@/lib/prisma';
 import type { DeleteProfileResponse, ErrorResponse } from '@/types/api';
+import { serialize } from 'cookie';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,

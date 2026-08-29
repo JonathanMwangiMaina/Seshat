@@ -1,33 +1,43 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
+import PasswordStrengthIndicator from '@/components/auth/PasswordStrengthIndicator';
 import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useAuth } from '@/hooks/useAuth';
 import { useDebounce } from '@/hooks/useDebounce';
-import PasswordStrengthIndicator from '@/components/auth/PasswordStrengthIndicator';
-import { LockKeyhole, Loader2 } from 'lucide-react';
 import type { AnalyzePasswordStrengthOutput } from '@/types/password-strength';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2, LockKeyhole } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
-
-const updatePasswordSchema = z.object({
-  currentPassword: z.string().min(1, { message: 'Current password is required.' }),
-  newPassword: z.string().min(8, { message: 'New password must be at least 8 characters.' }),
-  confirmNewPassword: z.string(),
-}).refine(data => data.newPassword === data.confirmNewPassword, {
-  message: "New passwords don't match.",
-  path: ["confirmNewPassword"],
-});
+const updatePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1, { message: 'Current password is required.' }),
+    newPassword: z.string().min(8, { message: 'New password must be at least 8 characters.' }),
+    confirmNewPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "New passwords don't match.",
+    path: ['confirmNewPassword'],
+  });
 
 type UpdatePasswordFormValues = z.infer<typeof updatePasswordSchema>;
 
 export default function UpdatePasswordForm() {
   const { updatePassword, loading: authLoading } = useAuth();
-  const [passwordStrength, setPasswordStrength] = useState<AnalyzePasswordStrengthOutput | null>(null);
+  const [passwordStrength, setPasswordStrength] = useState<AnalyzePasswordStrengthOutput | null>(
+    null
+  );
   const [strengthLoading, setStrengthLoading] = useState(false);
 
   const form = useForm<UpdatePasswordFormValues>({
@@ -62,7 +72,7 @@ export default function UpdatePasswordForm() {
           const result = await response.json();
           setPasswordStrength(result);
         } catch (error) {
-          console.error("Error analyzing password strength:", error);
+          console.error('Error analyzing password strength:', error);
           setPasswordStrength(null);
         } finally {
           setStrengthLoading(false);

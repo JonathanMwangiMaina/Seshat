@@ -9,10 +9,10 @@ A modern authentication platform built with Next.js 15 that provides secure user
 
 ## **Key Features**
 
-* **Smart Password Analysis** — Real-time password strength assessment with actionable security recommendations based on length, character variety, and common pattern detection
-* **Secure Authentication System** — Complete user authentication flow with session management, persistent login state, and client-side credential handling
-* **Profile Management** — Full-featured user profile interface supporting account updates, password changes, and secure session control
-* **Modern UI/UX** — Built with shadcn/ui, Radix UI primitives, and Tailwind CSS for a responsive, accessible, and visually polished experience
+- **Smart Password Analysis** — Real-time password strength assessment with actionable security recommendations based on length, character variety, and common pattern detection
+- **Secure Authentication System** — Complete user authentication flow with session management, persistent login state, and client-side credential handling
+- **Profile Management** — Full-featured user profile interface supporting account updates, password changes, and secure session control
+- **Modern UI/UX** — Built with shadcn/ui, Radix UI primitives, and Tailwind CSS for a responsive, accessible, and visually polished experience
 
 ## **Architecture / System Design**
 
@@ -32,9 +32,9 @@ RetailPass follows a modern Next.js Pages Router architecture with a full-stack 
 
 ## **Prerequisites**
 
-* **Node.js** `20.x` or higher
-* **npm** `9.x` or higher
-* **Supabase Account** (free tier available at https://supabase.com)
+- **Node.js** `20.x` or higher
+- **npm** `9.x` or higher
+- **Supabase Account** (free tier available at https://supabase.com)
 
 ## **Installation & Setup**
 
@@ -74,6 +74,7 @@ SUPABASE_DATABASE_URL="postgresql://postgres.xxxxx:[YOUR-PASSWORD]@aws-0-region.
 ```
 
 **Generate a secure JWT secret:**
+
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
@@ -182,25 +183,25 @@ retailpass/
 
 ## **Tech Stack**
 
-| Category | Technology |
-|----------|-----------|
-| **Framework** | Next.js 15.3.9 (React 18, Pages Router, Turbopack) |
-| **Language** | TypeScript 5.8.2 |
+| Category                | Technology                                                      |
+| ----------------------- | --------------------------------------------------------------- |
+| **Framework**           | Next.js 15.3.9 (React 18, Pages Router, Turbopack)              |
+| **Language**            | TypeScript 5.8.2                                                |
 | **Password Validation** | Local algorithmic analysis (length, variety, pattern detection) |
-| **UI Library** | shadcn/ui, Radix UI primitives |
-| **Styling** | Tailwind CSS 3.4, tailwindcss-animate |
-| **Form Management** | React Hook Form 7.54 with Zod validation |
-| **State Management** | React Context API |
-| **Icons** | Lucide React |
-| **Deployment** | Vercel |
+| **UI Library**          | shadcn/ui, Radix UI primitives                                  |
+| **Styling**             | Tailwind CSS 3.4, tailwindcss-animate                           |
+| **Form Management**     | React Hook Form 7.54 with Zod validation                        |
+| **State Management**    | React Context API                                               |
+| **Icons**               | Lucide React                                                    |
+| **Deployment**          | Vercel                                                          |
 
 ## **Key Design Patterns**
 
-* **API Routes** — Password analysis runs through Next.js API routes for consistent server-side validation
-* **Pages Router Architecture** — Uses proven Next.js Pages Router for reliable SSR and static generation
-* **Atomic Design** — UI components are structured from base primitives (shadcn/ui) to composed authentication forms
-* **Type Safety** — Full TypeScript coverage with Zod schema validation for runtime type safety and form validation
-* **Client-Side Routing** — Fast navigation with window.location for authentication flows
+- **API Routes** — Password analysis runs through Next.js API routes for consistent server-side validation
+- **Pages Router Architecture** — Uses proven Next.js Pages Router for reliable SSR and static generation
+- **Atomic Design** — UI components are structured from base primitives (shadcn/ui) to composed authentication forms
+- **Type Safety** — Full TypeScript coverage with Zod schema validation for runtime type safety and form validation
+- **Client-Side Routing** — Fast navigation with window.location for authentication flows
 
 ## **Contributing**
 

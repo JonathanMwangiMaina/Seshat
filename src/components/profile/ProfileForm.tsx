@@ -1,13 +1,20 @@
-"use client";
+'use client';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useAuth } from '@/hooks/useAuth';
-import { User as UserIcon, Mail, Loader2 } from 'lucide-react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2, Mail, User as UserIcon } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 interface User {
   id: string;
@@ -37,8 +44,9 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
   });
 
   const onSubmit = async (data: ProfileFormValues) => {
-    if (data.name !== undefined) { // Ensure name is passed, even if empty string
-        await updateProfile(data.name, data.email);
+    if (data.name !== undefined) {
+      // Ensure name is passed, even if empty string
+      await updateProfile(data.name, data.email);
     }
   };
 

@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { analyzePasswordStrength } from '@/lib/password-validator';
 import type { AnalyzePasswordStrengthOutput } from '@/types/password-strength';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(
   req: NextApiRequest,

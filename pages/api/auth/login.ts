@@ -1,9 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { serialize } from 'cookie';
-import { prisma } from '@/lib/prisma';
-import { comparePassword } from '@/lib/password';
 import { signToken } from '@/lib/auth';
-import type { LoginRequest, LoginResponse, ErrorResponse } from '@/types/api';
+import { comparePassword } from '@/lib/password';
+import { prisma } from '@/lib/prisma';
+import type { ErrorResponse, LoginRequest, LoginResponse } from '@/types/api';
+import { serialize } from 'cookie';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,9 +22,21 @@ export default async function handler(
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    // Find user by email
+    // Find user by email with explicit select (exclude passwordHash)
     const user = await prisma.user.findUnique({
       where: { email: email.toLowerCase() },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        emailVerified: true,
+        passwordHash: true,
+        resetToken: true,
+        resetTokenExpiry: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
     if (!user) {
@@ -57,6 +69,7 @@ export default async function handler(
     );
 
     // Return user without password hash
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, ...publicUser } = user;
 
     return res.status(200).json({ user: publicUser });

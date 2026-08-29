@@ -1,9 +1,9 @@
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import AuthFormWrapper from '@/components/shared/AuthFormWrapper';
 import SignupForm from '@/components/auth/SignupForm';
+import AuthFormWrapper from '@/components/shared/AuthFormWrapper';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function SignupPage() {
   const { user, initialLoading } = useAuth();
@@ -30,7 +30,14 @@ export default function SignupPage() {
   return (
     <AuthFormWrapper
       title="Create Account"
-      footer={<>Already have an account? <Link href="/login" className="text-primary hover:underline">Log in</Link></>}
+      footer={
+        <>
+          Already have an account?{' '}
+          <Link href="/login" className="text-primary hover:underline">
+            Log in
+          </Link>
+        </>
+      }
     >
       <SignupForm />
     </AuthFormWrapper>

@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { ErrorResponse, LogoutResponse } from '@/types/api';
 import { serialize } from 'cookie';
-import type { LogoutResponse, ErrorResponse } from '@/types/api';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,

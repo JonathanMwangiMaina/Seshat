@@ -1,35 +1,44 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useAuth } from '@/hooks/useAuth';
 import { useDebounce } from '@/hooks/useDebounce';
-import PasswordStrengthIndicator from './PasswordStrengthIndicator';
-import { User, Mail, LockKeyhole, Loader2 } from 'lucide-react';
 import type { AnalyzePasswordStrengthOutput } from '@/types/password-strength';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2, LockKeyhole, Mail, User } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import PasswordStrengthIndicator from './PasswordStrengthIndicator';
 
-
-const signupSchema = z.object({
-  name: z.string().optional(),
-  email: z.string().email({ message: 'Invalid email address.' }),
-  password: z.string().min(8, { message: 'Password must be at least 8 characters.' }),
-  confirmPassword: z.string(),
-}).refine(data => data.password === data.confirmPassword, {
-  message: "Passwords don't match.",
-  path: ["confirmPassword"],
-});
+const signupSchema = z
+  .object({
+    name: z.string().optional(),
+    email: z.string().email({ message: 'Invalid email address.' }),
+    password: z.string().min(8, { message: 'Password must be at least 8 characters.' }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match.",
+    path: ['confirmPassword'],
+  });
 
 type SignupFormValues = z.infer<typeof signupSchema>;
 
 export default function SignupForm() {
   const { signup, loading: authLoading } = useAuth();
-  const [passwordStrength, setPasswordStrength] = useState<AnalyzePasswordStrengthOutput | null>(null);
+  const [passwordStrength, setPasswordStrength] = useState<AnalyzePasswordStrengthOutput | null>(
+    null
+  );
   const [strengthLoading, setStrengthLoading] = useState(false);
 
   const form = useForm<SignupFormValues>({
@@ -65,7 +74,7 @@ export default function SignupForm() {
           const result = await response.json();
           setPasswordStrength(result);
         } catch (error) {
-          console.error("Error analyzing password strength:", error);
+          console.error('Error analyzing password strength:', error);
           setPasswordStrength(null);
         } finally {
           setStrengthLoading(false);
@@ -140,7 +149,7 @@ export default function SignupForm() {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <div className="relative">
-                 <LockKeyhole className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <LockKeyhole className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <FormControl>
                   <Input type="password" placeholder="••••••••" {...field} className="pl-10" />
                 </FormControl>

@@ -1,7 +1,17 @@
 import type { User } from '@prisma/client';
 
-// Omit sensitive fields from User type for API responses
-export type PublicUser = Omit<User, 'passwordHash'>;
+// Public user type for API responses (excludes sensitive fields)
+export type PublicUser = {
+  id: string;
+  email: string;
+  name: string | null;
+  role: User['role'];
+  emailVerified: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  resetToken: string | null;
+  resetTokenExpiry: Date | null;
+};
 
 // Authentication API types
 export interface SignupRequest {
@@ -38,7 +48,7 @@ export interface UpdateProfileResponse {
 }
 
 export interface UpdatePasswordRequest {
-  oldPassword: string;
+  currentPassword: string;
   newPassword: string;
 }
 

@@ -1,4 +1,5 @@
 # RetailPass - User Management Test Results
+
 ## Comprehensive Proof of Functionality
 
 **Test Date:** May 31, 2026
@@ -27,6 +28,7 @@ All user management functionality has been successfully implemented and tested:
 **Objective:** Create 3 users with different roles and verify storage in Supabase
 
 #### 1.1 ADMIN User Creation
+
 ```http
 POST /api/auth/signup
 Content-Type: application/json
@@ -40,6 +42,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "user": {
@@ -53,9 +56,11 @@ Content-Type: application/json
   }
 }
 ```
+
 **Status:** ✅ **201 Created**
 
 **Database Verification (Prisma Query Log):**
+
 ```sql
 INSERT INTO "public"."User"
 ("id","email","name","passwordHash","role","emailVerified","createdAt","updatedAt")
@@ -69,6 +74,7 @@ RETURNING "public"."User"."id", "public"."User"."email",
 ---
 
 #### 1.2 VENDOR User Creation
+
 ```http
 POST /api/auth/signup
 Content-Type: application/json
@@ -82,6 +88,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "user": {
@@ -95,11 +102,13 @@ Content-Type: application/json
   }
 }
 ```
+
 **Status:** ✅ **201 Created**
 
 ---
 
 #### 1.3 CUSTOMER User Creation (Default Role)
+
 ```http
 POST /api/auth/signup
 Content-Type: application/json
@@ -112,6 +121,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "user": {
@@ -125,6 +135,7 @@ Content-Type: application/json
   }
 }
 ```
+
 **Status:** ✅ **201 Created**
 **Note:** Role defaults to CUSTOMER when not specified
 
@@ -135,6 +146,7 @@ Content-Type: application/json
 **Objective:** Verify all 3 users can authenticate successfully
 
 #### 2.1 ADMIN Login
+
 ```http
 POST /api/auth/login
 Content-Type: application/json
@@ -152,6 +164,7 @@ Content-Type: application/json
 ---
 
 #### 2.2 VENDOR Login
+
 ```http
 POST /api/auth/login
 Content-Type: application/json
@@ -169,6 +182,7 @@ Content-Type: application/json
 ---
 
 #### 2.3 CUSTOMER Login (Before Deletion)
+
 ```http
 POST /api/auth/login
 Content-Type: application/json
@@ -190,6 +204,7 @@ Content-Type: application/json
 **Objective:** Verify password can be updated and new password works
 
 #### 3.1 Update Vendor Password
+
 ```http
 PUT /api/profile/update-password
 Content-Type: application/json
@@ -204,6 +219,7 @@ Cookie: auth_token=<vendor-jwt>
 **Result:** ✅ **200 OK** - Password updated successfully
 
 **Database Verification (Prisma Query Log):**
+
 ```sql
 SELECT "public"."User"."id", ... FROM "public"."User"
 WHERE ("public"."User"."id" = $1 AND 1=1)
@@ -216,6 +232,7 @@ WHERE "id" = $3
 ---
 
 #### 3.2 Verify New Password Works
+
 ```http
 POST /api/auth/login
 Content-Type: application/json
@@ -235,6 +252,7 @@ Content-Type: application/json
 **Objective:** Delete customer profile and verify removal from database
 
 #### 4.1 Delete Customer Profile
+
 ```http
 DELETE /api/profile/delete
 Cookie: auth_token=<customer-jwt>
@@ -243,6 +261,7 @@ Cookie: auth_token=<customer-jwt>
 **Result:** ✅ **200 OK** - Profile deleted successfully
 
 **Database Verification (Prisma Query Log):**
+
 ```sql
 SELECT "public"."User"."id", ... FROM "public"."User"
 WHERE ("public"."User"."id" = $1 AND 1=1)
@@ -255,6 +274,7 @@ RETURNING "public"."User"."id", ...
 ---
 
 #### 4.2 Verify Deleted User Cannot Login
+
 ```http
 POST /api/auth/login
 Content-Type: application/json
@@ -267,6 +287,7 @@ Content-Type: application/json
 
 **Result:** ✅ **401 Unauthorized** - Invalid email or password
 **Database Query Log:**
+
 ```sql
 SELECT ... FROM "public"."User"
 WHERE ("public"."User"."email" = $1 AND 1=1)
@@ -279,11 +300,11 @@ WHERE ("public"."User"."email" = $1 AND 1=1)
 
 ### Active Users in Supabase PostgreSQL
 
-| # | Role | Name | Email | User ID | Status |
-|---|------|------|-------|---------|--------|
-| 1 | ADMIN | Admin User | admin@retailpass.com | `cmptw8v3100009bfq7kvuebfd` | ✅ Active |
-| 2 | VENDOR | Vendor User | vendor@retailpass.com | `cmptw99t500019bfqubg5rpo8` | ✅ Active (Password Updated) |
-| 3 | CUSTOMER | Customer User | customer@retailpass.com | `cmptw9a1v00029bfqa47nwe4t` | ❌ Deleted |
+| #   | Role     | Name          | Email                   | User ID                     | Status                       |
+| --- | -------- | ------------- | ----------------------- | --------------------------- | ---------------------------- |
+| 1   | ADMIN    | Admin User    | admin@retailpass.com    | `cmptw8v3100009bfq7kvuebfd` | ✅ Active                    |
+| 2   | VENDOR   | Vendor User   | vendor@retailpass.com   | `cmptw99t500019bfqubg5rpo8` | ✅ Active (Password Updated) |
+| 3   | CUSTOMER | Customer User | customer@retailpass.com | `cmptw9a1v00029bfqa47nwe4t` | ❌ Deleted                   |
 
 ---
 
@@ -301,6 +322,7 @@ WHERE ("public"."User"."email" = $1 AND 1=1)
 ## 🛠️ TECHNICAL IMPLEMENTATION
 
 ### Stack
+
 - **Framework:** Next.js 15 with TypeScript
 - **Database:** Supabase (PostgreSQL)
 - **ORM:** Prisma 7 with PrismaPg adapter
@@ -309,6 +331,7 @@ WHERE ("public"."User"."email" = $1 AND 1=1)
 - **Validation:** Zod schemas
 
 ### Files Modified/Created
+
 1. `prisma/schema.prisma` - Added UserRole enum and role field
 2. `pages/api/auth/signup.ts` - Added role support
 3. `pages/api/profile/update-password.ts` - Password update endpoint
@@ -317,6 +340,7 @@ WHERE ("public"."User"."email" = $1 AND 1=1)
 6. `src/lib/middleware.ts` - Authentication middleware
 
 ### Database Migration
+
 ```sql
 -- Migration: 20260531144005_add_user_roles
 CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'VENDOR', 'CUSTOMER');
