@@ -8,7 +8,5 @@ export default defineConfig({
   migrations: {
     path: 'prisma/migrations',
   },
-  datasource: {
-    url: process.env['SUPABASE_DATABASE_URL'] || process.env['DATABASE_URL'],
-  },
+  earlyAccess: true,
 });

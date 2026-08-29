@@ -25,7 +25,9 @@ function createPrismaClient(): PrismaClient {
 
   const adapter = new PrismaPg(pool);
 
+  // Prisma v6 types don't include adapter in PrismaClientOptions, but runtime supports it
   return new PrismaClient({
+    // @ts-expect-error - Prisma v6 types don't include adapter but runtime supports it
     adapter,
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   });
