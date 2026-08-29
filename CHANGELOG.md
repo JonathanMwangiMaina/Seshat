@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-08-29
+
+### Fixed
+
+- **ESLint Peer Dependency Conflict**: Downgraded ESLint from 10.9.1 to 9.39.5 to resolve `ERESOLVE` error with `eslint-plugin-react@7.37.5` (peer dependency requires ESLint ≤9.x)
+- **Vercel Build Failure**: Fixed `npm install` exiting with code 1 due to upstream dependency conflict
+- **npm Install Reliability**: Removed need for `--legacy-peer-deps` by aligning ESLint ecosystem versions
+
+### Security
+
+- ESLint 9.39.5 still receives security updates from the ESLint team
+- All transitive dependency vulnerabilities remain patched (0 vulnerabilities)
+
 ## [1.0.0] - 2026-08-29
 
 ### Added
