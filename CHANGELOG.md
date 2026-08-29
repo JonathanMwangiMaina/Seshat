@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-08-29
+
+### Fixed
+
+- **npm allow-scripts Warnings**: Explicitly approved install scripts for `@prisma/client`, `@prisma/engines`, `esbuild`, and `prisma` using npm 12's native `approve-scripts` command
+- **Vercel Build Cleanliness**: Eliminated `npm warn allow-scripts` warnings in production builds without suppression configs
+
+### Security
+
+- Upgraded npm to 12.0.2 (supports `approve-scripts` for explicit script approval)
+- All install scripts explicitly approved, no `.npmrc` suppression needed
+- All transitive dependency vulnerabilities remain patched (0 vulnerabilities)
+
 ## [1.1.0] - 2026-08-29
 
 ### Fixed
