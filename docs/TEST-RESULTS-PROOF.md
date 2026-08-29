@@ -1,4 +1,4 @@
-# RetailPass - User Management Test Results
+# Seshat (formerly RetailPass) - User Management Test Results
 
 ## Comprehensive Proof of Functionality
 

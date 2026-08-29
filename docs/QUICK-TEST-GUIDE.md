@@ -1,4 +1,4 @@
-# Quick Test Guide - User Management
+# Quick Test Guide - User Management (Seshat)
 
 ## 1. Apply Migration (Run Once)
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the complete "Forgot Password" flow implementation for the RetailPass application using token-based password reset.
+This document describes the complete "Forgot Password" flow implementation for the Seshat (formerly RetailPass) application using token-based password reset.
 
 ## What Was Implemented
 

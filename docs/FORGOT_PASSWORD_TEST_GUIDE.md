@@ -1,4 +1,4 @@
-# Quick Test Guide: Forgot Password Flow
+# Quick Test Guide: Forgot Password Flow (Seshat)
 
 ## Prerequisites
 

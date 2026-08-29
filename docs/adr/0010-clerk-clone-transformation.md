@@ -1,4 +1,4 @@
-# 0010 - Transform RetailPass into Production-Grade Clerk Clone with Flexible RBAC
+# 0010 - Transform Seshat (formerly RetailPass) into Production-Grade Clerk Clone with Flexible RBAC
 
 ## Status
 
@@ -325,7 +325,7 @@ Build reusable React components (like Clerk's):
 - Webhook reliability (mitigate with retry + dead letter queue)
 - RBAC performance at scale (mitigate with caching + database indexes)
 
-## Migration Path from Current RetailPass
+## Migration Path from Current Seshat (v1.2.0)
 
 1. Keep existing API contracts during transition
 2. Add new models alongside existing ones
@@ -335,7 +335,7 @@ Build reusable React components (like Clerk's):
 
 ## Success Criteria
 
-- [ ] All current RetailPass features work identically
+- [ ] All current Seshat features work identically
 - [ ] Multi-org support with switching
 - [ ] Custom roles/permissions per org
 - [ ] Webhook events match Clerk payload format

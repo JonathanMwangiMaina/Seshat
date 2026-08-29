@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-RetailPass v0.1.0 was built on Next.js 15, React 18, Prisma 7, Node 20. Major framework versions have been released with significant improvements and security fixes.
+Seshat (formerly RetailPass) v0.1.0 was built on Next.js 15, React 18, Prisma 7, Node 20. Major framework versions have been released with significant improvements and security fixes. The project was renamed to Seshat in v1.3.0.
 
 ## Decision
 

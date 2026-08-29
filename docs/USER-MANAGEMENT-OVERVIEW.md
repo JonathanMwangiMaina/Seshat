@@ -1,4 +1,4 @@
-# User Management System - Complete Overview
+# User Management System - Complete Overview (Seshat)
 
 ## System Capabilities
 

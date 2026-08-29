@@ -1,6 +1,6 @@
-# Deployment Guide for RetailPass
+# Deployment Guide for Seshat
 
-This guide provides step-by-step instructions for deploying RetailPass to Vercel with proper environment configuration.
+This guide provides step-by-step instructions for deploying Seshat to Vercel with proper environment configuration.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ Before deploying, ensure you have:
 
 1. **Vercel Account** - Sign up at https://vercel.com
 2. **Supabase Account** - Sign up at https://supabase.com (free tier available)
-3. **GitHub Repository** - Your code should be pushed to GitHub
+3. **GitHub Repository** - Your code should be pushed to GitHub (`JonathanMwangiMaina/seshat`)
 4. **Environment Variables Ready** - See the section below
 
 ## Environment Variables
@@ -77,7 +77,7 @@ Vercel automatically sets this to `production`. You don't need to configure it m
 
 1. Go to https://vercel.com/new
 2. Click **Import Project**
-3. Select your GitHub repository (`JonathanMwangiMaina/retailpass`)
+3. Select your GitHub repository (`JonathanMwangiMaina/seshat`)
 4. Click **Import**
 
 ### Step 2: Configure Project Settings
@@ -126,7 +126,7 @@ SUPABASE_DATABASE_URL="your-supabase-url" npx prisma db push
 
 ### Step 5: Verify Deployment
 
-Once deployment completes, Vercel will provide a URL like `https://retailpass.vercel.app`
+Once deployment completes, Vercel will provide a URL like `https://seshat.vercel.app`
 
 ## Post-Deployment Testing
 

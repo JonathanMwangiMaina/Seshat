@@ -1,4 +1,4 @@
-# **App Name**: RetailPass
+# **App Name**: Seshat
 
 ## Core Features:
 

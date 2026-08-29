@@ -1,4 +1,4 @@
-# Clerk Clone Transformation: Weeks 1-3 Implementation Plan
+# Clerk Clone Transformation: Weeks 1-3 Implementation Plan (Seshat)
 
 ## Phase 1: Core Data Model & Sessions (Week 1)
 
