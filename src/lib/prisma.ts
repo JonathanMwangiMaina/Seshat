@@ -1,39 +1,29 @@
 import { PrismaClient } from '@prisma/client';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 import { PrismaPg } from '@prisma/adapter-pg';
-import Database from 'better-sqlite3';
 import pg from 'pg';
 
 /**
- * Prisma client factory - creates appropriate client based on environment
- * Uses SQLite for local development, PostgreSQL/Supabase for production
+ * Prisma client factory - uses Supabase PostgreSQL exclusively
+ * Uses SUPABASE_DATABASE_URL for queries (transaction pooler)
+ * Uses DIRECT_URL for migrations (session pooler)
  */
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined };
 
 function createPrismaClient(): PrismaClient {
-  const isProduction = process.env.NODE_ENV === 'production';
-  const hasSupabase = !!process.env.SUPABASE_DATABASE_URL;
+  const connectionString = process.env.SUPABASE_DATABASE_URL || process.env.DIRECT_URL;
   
-  let adapter;
-  
-  if (hasSupabase) {
-    // Use Supabase PostgreSQL with connection pooling
-    // Use SUPABASE_DATABASE_URL for queries (transaction pooler)
-    // Use DIRECT_URL for migrations (session pooler)
-    const connectionString = process.env.SUPABASE_DATABASE_URL || process.env.DIRECT_URL;
-    const pool = new pg.Pool({ 
-      connectionString,
-      max: 20,
-      idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 2000,
-    });
-    adapter = new PrismaPg(pool);
-  } else {
-    // Development: Use local SQLite
-    const connectionString = process.env.DATABASE_URL || 'file:./dev.db';
-    const sqlite = new Database(connectionString.replace('file:', ''));
-    adapter = new PrismaBetterSqlite3(sqlite);
+  if (!connectionString) {
+    throw new Error('Missing SUPABASE_DATABASE_URL or DIRECT_URL environment variable');
   }
+
+  const pool = new pg.Pool({ 
+    connectionString,
+    max: 20,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 2000,
+  });
+  
+  const adapter = new PrismaPg(pool);
 
   return new PrismaClient({
     adapter,
@@ -41,8 +31,19 @@ function createPrismaClient(): PrismaClient {
   });
 }
 
-export const prisma = globalForPrisma.prisma || createPrismaClient();
+function getPrisma(): PrismaClient {
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = createPrismaClient();
+  }
+  return globalForPrisma.prisma;
+}
+
+export const prisma = new Proxy({} as PrismaClient, {
+  get(target, prop) {
+    return getPrisma()[prop as keyof PrismaClient];
+  },
+});
 
 if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.prisma = prisma;
+  globalForPrisma.prisma = undefined;
 }
