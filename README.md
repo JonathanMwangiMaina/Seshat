@@ -1,4 +1,4 @@
-# **RetailPass**
+# **Seshat**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Next.js](https://img.shields.io/badge/Next.js-16.3.3-black?logo=next.js)](https://nextjs.org/)
@@ -6,9 +6,9 @@
 [![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel&logoColor=white)](https://vercel.com)
 [![npm](https://img.shields.io/badge/npm-11.x-red?logo=npm)](https://www.npmjs.com/)
 [![Node.js](https://img.shields.io/badge/Node.js-24.x-green?logo=node.js)](https://nodejs.org/)
-[![Version](https://img.shields.io/badge/Version-1.2.0-blue?logo=semver)](https://github.com/JonathanMwangiMaina/retailpass/releases)
+[![Version](https://img.shields.io/badge/Version-1.2.0-blue?logo=semver)](https://github.com/JonathanMwangiMaina/seshat/releases)
 
-A modern authentication platform built with Next.js 16 that provides secure user registration, login, and profile management with intelligent password strength analysis. RetailPass delivers real-time password security feedback using algorithmic validation, helping users create stronger credentials.
+A modern authentication platform built with Next.js 16 that provides secure user registration, login, and profile management with intelligent password strength analysis. Seshat delivers real-time password security feedback using algorithmic validation, helping users create stronger credentials.
 
 ## **Key Features**
 
@@ -20,9 +20,9 @@ A modern authentication platform built with Next.js 16 that provides secure user
 
 ## **Architecture / System Design**
 
-RetailPass follows a modern Next.js Pages Router architecture with a full-stack backend:
+Seshat follows a modern Next.js Pages Router architecture with a full-stack backend:
 
-1. **Authentication Backend**: Production-ready authentication system with PostgreSQL/Supabase database, Prisma ORM 6 with driver adapters, JWT tokens in HTTP-only cookies, and bcrypt password hashing. All authentication state managed server-side with secure session handling.
+### 1. **Authentication Backend**: Production-ready authentication system with PostgreSQL/Supabase database, Prisma ORM 6 with driver adapters, JWT tokens in HTTP-only cookies, and bcrypt password hashing. All authentication state managed server-side with secure session handling.
 
 2. **Database Layer**: Prisma ORM 6 with PostgreSQL driver adapter (`@prisma/adapter-pg`) connecting to Supabase managed database. Connection pooling for optimal performance. User data persisted with proper migrations and type-safe queries.
 
@@ -45,8 +45,8 @@ RetailPass follows a modern Next.js Pages Router architecture with a full-stack 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/JonathanMwangiMaina/retailpass.git
-cd retailpass
+git clone https://github.com/JonathanMwangiMaina/seshat.git
+cd seshat
 ```
 
 ### 2. Install dependencies
@@ -156,7 +156,7 @@ npm run db:seed
 ## **Project Structure**
 
 ```
-retailpass/
+seshat/
 ├── pages/                     # Next.js Pages Router
 │   ├── api/                   # API routes (backend)
 │   │   ├── auth/              # Authentication API endpoints

@@ -66,11 +66,11 @@ We will consolidate all test scripts into a `tests/` directory with the followin
 
 ## Current Test Coverage
 
-| Test Type | Status | Count |
-|-----------|--------|-------|
+| Test Type   | Status     | Count    |
+| ----------- | ---------- | -------- |
 | Integration | ✅ Passing | 29 tests |
-| Unit | 📋 Planned | 0 |
-| E2E | 📋 Planned | 0 |
+| Unit        | 📋 Planned | 0        |
+| E2E         | 📋 Planned | 0        |
 
 ## CI/CD Integration
 

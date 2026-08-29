@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 const BASE_URL = 'https://retailpass.vercel.app';
 
@@ -28,7 +28,7 @@ test.describe('RetailPass Authentication E2E', () => {
       await page.waitForSelector('text=Welcome Back', { timeout: 15000 });
       const passwordInput = page.locator('input[name="password"]');
       await expect(passwordInput).toBeVisible();
-      
+
       const toggleButton = await getToggleButton(page, passwordInput);
       await expect(toggleButton).toBeVisible({ timeout: 5000 });
       await expect(toggleButton.locator('svg')).toBeVisible();
@@ -137,9 +137,11 @@ test.describe('RetailPass Authentication E2E', () => {
 
       await passwordInput.fill('weak');
       await page.waitForTimeout(500);
-      
+
       // Check that some strength indicator appears
-      const strengthIndicator = page.locator('[class*="strength"], [class*="password"], [role="progressbar"]').first();
+      const strengthIndicator = page
+        .locator('[class*="strength"], [class*="password"], [role="progressbar"]')
+        .first();
       await expect(strengthIndicator).toBeVisible({ timeout: 5000 });
     });
   });
@@ -157,7 +159,7 @@ test.describe('RetailPass Authentication E2E', () => {
       await page.waitForSelector('text=Forgot Password', { timeout: 15000 });
       await page.fill('input[type="email"]', 'test@retailpass.com');
       await page.click('button[type="submit"]');
-      
+
       // Just verify the form submits without error
       await expect(page.locator('button[type="submit"]')).toBeVisible({ timeout: 5000 });
     });

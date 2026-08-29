@@ -7,6 +7,7 @@ Accepted
 ## Context
 
 Vercel builds were showing `npm warn allow-scripts` warnings for packages with native install scripts:
+
 - `@prisma/client@6.19.3` (postinstall)
 - `@prisma/engines@6.12.0` (postinstall)
 - `esbuild@0.28.2` (postinstall)

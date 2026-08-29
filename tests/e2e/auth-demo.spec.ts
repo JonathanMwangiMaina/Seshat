@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 const BASE_URL = 'http://localhost:9002';
 
@@ -22,11 +22,11 @@ test.describe('RetailPass Auth E2E with Demo Credentials (Local)', () => {
         await page.fill('input[name="email"]', user.email);
         await page.fill('input[name="password"]', user.password);
         await page.click('button[type="submit"]:has-text("Login")');
-        
+
         // Wait for redirect to profile and content to load
         await expect(page).toHaveURL(`${BASE_URL}/profile`, { timeout: 10000 });
         await expect(page.locator('text=My Profile')).toBeVisible({ timeout: 10000 });
-        
+
         // Verify user's name is in the name input field
         await expect(page.locator('input[name="name"]')).toHaveValue(user.name, { timeout: 5000 });
       });
@@ -38,9 +38,11 @@ test.describe('RetailPass Auth E2E with Demo Credentials (Local)', () => {
       await page.fill('input[name="email"]', DEMO_USERS.admin.email);
       await page.fill('input[name="password"]', 'WrongPassword123!');
       await page.click('button[type="submit"]:has-text("Login")');
-      
+
       // Check for error notification (use first to avoid strict mode)
-      await expect(page.locator('text=Invalid email or password').first()).toBeVisible({ timeout: 5000 });
+      await expect(page.locator('text=Invalid email or password').first()).toBeVisible({
+        timeout: 5000,
+      });
     });
   });
 
@@ -56,10 +58,12 @@ test.describe('RetailPass Auth E2E with Demo Credentials (Local)', () => {
       await page.fill('input[name="email"]', DEMO_USERS.admin.email);
       await page.fill('input[name="password"]', DEMO_USERS.admin.password);
       await page.click('button[type="submit"]:has-text("Login")');
-      
+
       await expect(page).toHaveURL(`${BASE_URL}/profile`, { timeout: 10000 });
       await expect(page.locator('text=My Profile')).toBeVisible({ timeout: 10000 });
-      await expect(page.locator('input[name="name"]')).toHaveValue(DEMO_USERS.admin.name, { timeout: 5000 });
+      await expect(page.locator('input[name="name"]')).toHaveValue(DEMO_USERS.admin.name, {
+        timeout: 5000,
+      });
     });
   });
 
@@ -70,10 +74,10 @@ test.describe('RetailPass Auth E2E with Demo Credentials (Local)', () => {
       await page.fill('input[name="email"]', DEMO_USERS.admin.email);
       await page.fill('input[name="password"]', DEMO_USERS.admin.password);
       await page.click('button[type="submit"]:has-text("Login")');
-      
+
       await expect(page).toHaveURL(`${BASE_URL}/profile`, { timeout: 10000 });
       await expect(page.locator('text=My Profile')).toBeVisible({ timeout: 10000 });
-      
+
       // Find and click logout button
       await page.click('button:has-text("Logout")');
       // Logout redirects to login page
@@ -95,7 +99,9 @@ test.describe('RetailPass Auth E2E with Demo Credentials (Local)', () => {
         // Verify profile page loads with user data
         await expect(page.locator('text=My Profile')).toBeVisible({ timeout: 10000 });
         await expect(page.locator('input[name="name"]')).toHaveValue(user.name, { timeout: 5000 });
-        await expect(page.locator('input[name="email"]')).toHaveValue(user.email, { timeout: 5000 });
+        await expect(page.locator('input[name="email"]')).toHaveValue(user.email, {
+          timeout: 5000,
+        });
 
         // Logout - redirects to login
         await page.click('button:has-text("Logout")');

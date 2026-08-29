@@ -14,7 +14,7 @@
  * const resend = new Resend(process.env.RESEND_API_KEY);
  *
  * await resend.emails.send({
- *   from: 'RetailPass <noreply@retailpass.com>',
+ *   from: 'Seshat <noreply@seshat.app>',
  *   to: email,
  *   subject: 'Password Reset Request',
  *   html: `<p>Click here to reset your password: ${resetUrl}</p>`,

@@ -5,6 +5,7 @@
 ### Priority: CRITICAL - Foundation for all subsequent work
 
 #### 1.1 Prisma Schema & Migration (Day 1-2)
+
 - [ ] **Add new Prisma models** to `prisma/schema.prisma`:
   - `Organization`, `OrganizationMembership`, `Role`, `Permission`, `RoleSet`, `VerifiedDomain`
   - `Session`, `Client` (replace current simple session model)
@@ -16,6 +17,7 @@
 - [ ] **Verify migration** applies cleanly to local Supabase
 
 #### 1.2 Hybrid Session Model Implementation (Day 2-3)
+
 - [ ] **Create `SessionService`** (`src/lib/session.ts`):
   - `createClientToken(userId, deviceInfo)` → returns client token, stores in `Client` table
   - `createSessionToken(clientId, orgId, role, permissions)` → returns short-lived JWT (60s)
@@ -32,6 +34,7 @@
   - `__session`: HttpOnly, Secure, SameSite=Strict, 60s
 
 #### 1.3 Token Refresh Endpoint (Day 3-4)
+
 - [ ] **Create `POST /api/auth/refresh`**:
   - Reads `__client` cookie
   - Validates client token in DB
@@ -44,12 +47,14 @@
   - Graceful logout if refresh fails
 
 #### 1.4 Session/Device Management API (Day 4-5)
+
 - [ ] **`GET /api/auth/sessions`** - List active sessions/devices for current user
 - [ ] **`DELETE /api/auth/sessions/:id`** - Revoke specific session
 - [ ] **`DELETE /api/auth/sessions`** - Revoke all sessions (remote sign-out)
 - [ ] **Update `src/lib/middleware.ts`** to validate session token with org claims
 
 #### 1.5 User Migration & Default Org (Day 5)
+
 - [ ] **Migration script** to create default organization for existing users:
   - One org per user: `${email}'s Organization`
   - Add user as `org:admin` member
@@ -64,6 +69,7 @@
 ### Priority: HIGH - Core multi-tenant functionality
 
 #### 2.1 Organization CRUD API (Day 1-2)
+
 - [ ] **`POST /api/organizations`** - Create organization (slug auto-generated from name)
 - [ ] **`GET /api/organizations`** - List user's organizations (with role)
 - [ ] **`GET /api/organizations/:id`** - Get organization details
@@ -72,6 +78,7 @@
 - [ ] **Authorization**: Only `org:admin` can update/delete
 
 #### 2.2 Membership Management (Day 2-3)
+
 - [ ] **`POST /api/organizations/:id/members`** - Invite member by email + role
 - [ ] **`GET /api/organizations/:id/members`** - List members with roles
 - [ ] **`PATCH /api/organizations/:id/members/:userId`** - Update role/metadata
@@ -80,6 +87,7 @@
 - [ ] **`POST /api/organizations/invitations/accept`** - Accept invitation
 
 #### 2.3 Role/Permission System (Day 3-4)
+
 - [ ] **`GET /api/organizations/:id/roles`** - List available roles (from RoleSet)
 - [ ] **`POST /api/organizations/:id/roles`** - Create custom role
 - [ ] **`PATCH /api/organizations/:id/roles/:roleId`** - Update role permissions
@@ -88,6 +96,7 @@
 - [ ] **RoleSet API**: `GET/POST/PATCH /api/organizations/:id/role-sets`
 
 #### 2.4 Authorization Helpers (Day 4)
+
 - [ ] **Backend `auth()` function** (`src/lib/authz.ts`):
   - Returns `{ userId, orgId, orgRole, orgPermissions, has() }`
   - `has({ role })`, `has({ permission })`, `has({ allPermissions: [] })`
@@ -99,6 +108,7 @@
   - `requireAuth({ permission: 'org:billing:manage' })`
 
 #### 2.5 Organization Switcher Component (Day 5)
+
 - [ ] **`<OrganizationSwitcher />`** component:
   - Dropdown with user's organizations
   - Shows current org with badge
@@ -114,6 +124,7 @@
 ### Priority: HIGH - External integrations & data consistency
 
 #### 3.1 Webhook Infrastructure (Day 1-2)
+
 - [ ] **`POST /api/webhooks/clerk`** endpoint:
   - Verify Svix signature (using `svix` package)
   - Parse event type and payload
@@ -131,6 +142,7 @@
   - `organizationInvitation.created`, `organizationInvitation.accepted`, `organizationInvitation.revoked`
 
 #### 3.2 Event Emission (Day 2-3)
+
 - [ ] **Create `EventEmitter` service** (`src/lib/events.ts`):
   - `emit(eventType, payload)` - pushes to webhook queue
   - Clerk-compatible payload format
@@ -143,6 +155,7 @@
   - Invitation: create, accept, revoke
 
 #### 3.3 Webhook Configuration & Management (Day 3-4)
+
 - [ ] **`POST /api/organizations/:id/webhooks`** - Register webhook endpoint
 - [ ] **`GET /api/organizations/:id/webhooks`** - List webhooks
 - [ ] **`DELETE /api/organizations/:id/webhooks/:webhookId`** - Delete webhook
@@ -150,6 +163,7 @@
 - [ ] **Webhook secret rotation** support
 
 #### 3.4 Testing & Reliability (Day 4-5)
+
 - [ ] **Unit tests** for webhook signature verification
 - [ ] **Integration tests** for event emission on all operations
 - [ ] **Load test** webhook endpoint (100 req/s)
@@ -161,16 +175,19 @@
 ## Cross-Cutting Concerns (All Weeks)
 
 ### Testing (Daily)
+
 - [ ] Unit tests for each new service/module (>80% coverage)
 - [ ] Integration tests for each API endpoint
 - [ ] E2E tests for critical flows (Playwright)
 
 ### Code Quality (Daily)
+
 - [ ] Run `npm run lint`, `npm run typecheck`, `npm run build` before each commit
 - [ ] Maintain 0 vulnerabilities, 0 warnings, 0 errors
 - [ ] Update ADRs for any architectural decisions
 
 ### Documentation (End of each week)
+
 - [ ] Update `CHANGELOG.md` with weekly progress
 - [ ] Document new API endpoints in `docs/`
 - [ ] Update README with new features
@@ -179,34 +196,35 @@
 
 ## Dependencies & Prerequisites
 
-| Task | Depends On |
-|------|------------|
-| 1.2 Hybrid Sessions | 1.1 Schema |
-| 1.3 Token Refresh | 1.2 Session Service |
-| 1.4 Session API | 1.2 Session Service |
-| 2.1 Org CRUD | 1.1 Schema, 1.5 Migration |
-| 2.2 Membership | 2.1 Org CRUD |
-| 2.3 Roles/Perms | 2.1 Org CRUD |
-| 2.4 Auth Helpers | 1.3 Token Refresh, 2.3 Roles |
-| 2.5 Switcher | 2.4 Auth Helpers |
-| 3.1 Webhooks | 3.2 Event Emission |
-| 3.2 Events | 1.1 Schema, 2.1-2.3 APIs |
-| 3.3 Webhook Mgmt | 3.1 Webhooks |
+| Task                | Depends On                   |
+| ------------------- | ---------------------------- |
+| 1.2 Hybrid Sessions | 1.1 Schema                   |
+| 1.3 Token Refresh   | 1.2 Session Service          |
+| 1.4 Session API     | 1.2 Session Service          |
+| 2.1 Org CRUD        | 1.1 Schema, 1.5 Migration    |
+| 2.2 Membership      | 2.1 Org CRUD                 |
+| 2.3 Roles/Perms     | 2.1 Org CRUD                 |
+| 2.4 Auth Helpers    | 1.3 Token Refresh, 2.3 Roles |
+| 2.5 Switcher        | 2.4 Auth Helpers             |
+| 3.1 Webhooks        | 3.2 Event Emission           |
+| 3.2 Events          | 1.1 Schema, 2.1-2.3 APIs     |
+| 3.3 Webhook Mgmt    | 3.1 Webhooks                 |
 
 ---
 
 ## Risk Mitigation
 
-| Risk | Mitigation |
-|------|------------|
-| Session complexity | Comprehensive test suite; gradual rollout with feature flags |
-| Webhook reliability | Exponential backoff + dead letter queue; monitoring alerts |
-| RBAC performance | Database indexes on membership/role lookups; Redis caching (Week 6) |
-| Migration data loss | Backup before migration; test migration on staging first |
+| Risk                | Mitigation                                                          |
+| ------------------- | ------------------------------------------------------------------- |
+| Session complexity  | Comprehensive test suite; gradual rollout with feature flags        |
+| Webhook reliability | Exponential backoff + dead letter queue; monitoring alerts          |
+| RBAC performance    | Database indexes on membership/role lookups; Redis caching (Week 6) |
+| Migration data loss | Backup before migration; test migration on staging first            |
 
 ---
 
 ## Week 1 Definition of Done
+
 - [ ] All new Prisma models deployed to Supabase
 - [ ] Hybrid sessions working (login → client+session tokens → refresh)
 - [ ] Token refresh every 50s in browser
@@ -216,6 +234,7 @@
 - [ ] 0 vulnerabilities, 0 warnings, 0 errors
 
 ## Week 2 Definition of Done
+
 - [ ] Full organization CRUD + membership management
 - [ ] Role/permission system with RoleSets
 - [ ] `has()` authorization working on frontend & backend
@@ -224,6 +243,7 @@
 - [ ] 0 vulnerabilities, 0 warnings, 0 errors
 
 ## Week 3 Definition of Done
+
 - [ ] Webhook endpoint with Svix verification
 - [ ] All core events emitted on mutations
 - [ ] Retry logic with exponential backoff

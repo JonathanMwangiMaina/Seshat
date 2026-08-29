@@ -117,7 +117,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(data.user);
         toast({
           title: 'Signup Successful',
-          description: 'Welcome to RetailPass!',
+          description: 'Welcome to Seshat!',
         });
         navigateTo('/profile');
       } catch (error) {

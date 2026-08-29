@@ -1,51 +1,51 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --color-background: #E6E6E6;
+  --color-background: #e6e6e6;
   --color-foreground: #262626;
 
-  --color-muted: #D9D9D9;
+  --color-muted: #d9d9d9;
   --color-muted-foreground: #666666;
 
-  --color-popover: #FFFFFF;
+  --color-popover: #ffffff;
   --color-popover-foreground: #262626;
 
-  --color-card: #FFFFFF;
+  --color-card: #ffffff;
   --color-card-foreground: #262626;
 
-  --color-border: #CCCCCC;
-  --color-input: #EBEBEB;
+  --color-border: #cccccc;
+  --color-input: #ebebeb;
 
-  --color-primary: #6495ED;
-  --color-primary-foreground: #FAFAFA;
+  --color-primary: #6495ed;
+  --color-primary-foreground: #fafafa;
 
-  --color-secondary: #C5D5F5;
-  --color-secondary-foreground: #3D4A6B;
+  --color-secondary: #c5d5f5;
+  --color-secondary-foreground: #3d4a6b;
 
-  --color-accent: #A084CA;
-  --color-accent-foreground: #FFFFFF;
+  --color-accent: #a084ca;
+  --color-accent-foreground: #ffffff;
 
-  --color-destructive: #EF4444;
-  --color-destructive-foreground: #FAFAFA;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #fafafa;
 
-  --color-ring: #8BB0F2;
+  --color-ring: #8bb0f2;
 
   --radius: 0.5rem;
 
-  --color-chart-1: #E86C3A;
-  --color-chart-2: #2EC4A6;
-  --color-chart-3: #2D6B7D;
-  --color-chart-4: #E8A83A;
-  --color-chart-5: #E87A3A;
+  --color-chart-1: #e86c3a;
+  --color-chart-2: #2ec4a6;
+  --color-chart-3: #2d6b7d;
+  --color-chart-4: #e8a83a;
+  --color-chart-5: #e87a3a;
 
-  --color-sidebar-background: #FAFAFA;
+  --color-sidebar-background: #fafafa;
   --color-sidebar-foreground: #262626;
-  --color-sidebar-primary: #6495ED;
-  --color-sidebar-primary-foreground: #FAFAFA;
-  --color-sidebar-accent: #A084CA;
-  --color-sidebar-accent-foreground: #FFFFFF;
-  --color-sidebar-border: #CCCCCC;
-  --color-sidebar-ring: #8BB0F2;
+  --color-sidebar-primary: #6495ed;
+  --color-sidebar-primary-foreground: #fafafa;
+  --color-sidebar-accent: #a084ca;
+  --color-sidebar-accent-foreground: #ffffff;
+  --color-sidebar-border: #cccccc;
+  --color-sidebar-ring: #8bb0f2;
 }
 
 :root {

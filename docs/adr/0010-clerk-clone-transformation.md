@@ -7,12 +7,14 @@ Accepted
 ## Context
 
 RetailPass v1.2.0 is a solid authentication platform with:
+
 - Next.js 16 + React 19 + Prisma 6 + Supabase PostgreSQL
 - JWT in HTTP-only cookies, bcrypt password hashing
 - Fixed 3-role RBAC (ADMIN, VENDOR, CUSTOMER)
 - Basic user management (signup, login, profile, password reset)
 
 Clerk provides a production-grade authentication platform with:
+
 - Multi-tenant Organizations (shared user pool model)
 - Flexible RBAC with custom roles/permissions per organization
 - Hybrid session model (60s JWT + long-lived client token + refresh)
@@ -157,15 +159,17 @@ enum SessionStatus {
 ### 2. Hybrid Session Model (Clerk-style)
 
 **Two-Token Architecture:**
+
 - **Client Token** (`__client` cookie): Long-lived (30 days), HttpOnly, Secure, SameSite=Lax
   - Source of truth for authentication state
   - Stored in `Client` table, enables remote sign-out
-  
+
 - **Session Token** (`__session` cookie): Short-lived (60s), HttpOnly, Secure, SameSite=Strict
   - JWT with claims: `sub`, `sid`, `org_id`, `org_role`, `org_permissions`, `org_slug`
   - Refreshes every 50s via background request to `/api/auth/refresh`
 
 **Token Refresh Flow:**
+
 ```
 Client (50s interval) → POST /api/auth/refresh (with __client cookie)
   → Validate client token in DB
@@ -178,24 +182,27 @@ Client (50s interval) → POST /api/auth/refresh (with __client cookie)
 **Permission Format:** `{resource}:{action}` (e.g., `org:members:manage`, `org:billing:read`)
 
 **Role Structure:**
+
 - System roles: `org:admin` (all permissions), `org:member` (read-only)
 - Custom roles: Created per application, assigned to Role Sets
 - Role Sets control which roles are available per organization
 
 **Authorization Checks:**
+
 ```typescript
 // Frontend hook
-const { has } = useAuth()
-const canManageBilling = has({ permission: 'org:billing:manage' })
+const { has } = useAuth();
+const canManageBilling = has({ permission: 'org:billing:manage' });
 
 // Backend middleware
-const { has } = await auth()
-if (!has({ role: 'org:admin' })) throw new ForbiddenError()
+const { has } = await auth();
+if (!has({ role: 'org:admin' })) throw new ForbiddenError();
 ```
 
 ### 4. Webhook System for Data Sync
 
 **Events to Emit:**
+
 - `user.created`, `user.updated`, `user.deleted`
 - `session.created`, `session.revoked`, `session.ended`
 - `organization.created`, `organization.updated`, `organization.deleted`
@@ -203,6 +210,7 @@ if (!has({ role: 'org:admin' })) throw new ForbiddenError()
 - `organizationInvitation.created`, `organizationInvitation.accepted`, `organizationInvitation.revoked`
 
 **Webhook Handler:**
+
 ```typescript
 POST /api/webhooks/clerk
   → Verify Svix signature
@@ -213,6 +221,7 @@ POST /api/webhooks/clerk
 ### 5. Organization Context & Switching
 
 **Active Organization:** Stored in session claims, switchable via UI
+
 - Tab-independent (each tab maintains own active org)
 - `useOrganization()` hook for frontend
 - `auth()` returns `orgId`, `orgRole`, `orgPermissions` for backend
@@ -220,6 +229,7 @@ POST /api/webhooks/clerk
 ### 6. Drop-in UI Components Pattern
 
 Build reusable React components (like Clerk's):
+
 - `<SignIn />`, `<SignUp />`, `<UserButton />`
 - `<OrganizationSwitcher />`, `<OrganizationProfile />`
 - `<OrganizationList />` (for admin management)
@@ -251,6 +261,7 @@ Build reusable React components (like Clerk's):
 ## Implementation Phases
 
 ### Phase 1: Core Data Model & Sessions (Week 1)
+
 - [ ] Add Prisma models for Organization, Membership, Role, Permission, Session, Client
 - [ ] Migrate existing users to new schema
 - [ ] Implement hybrid session model (client token + session token)
@@ -258,29 +269,34 @@ Build reusable React components (like Clerk's):
 - [ ] Add session/device management API
 
 ### Phase 2: Organizations & RBAC (Week 2)
+
 - [ ] Organization CRUD + membership management
 - [ ] Role/Permission system with Role Sets
 - [ ] Authorization helpers (`has()`, `useAuth()`)
 - [ ] Organization switcher component
 
 ### Phase 3: Webhooks & Real-time Sync (Week 3)
+
 - [ ] Webhook endpoint with Svix verification
 - [ ] Event emission for all user/org/session changes
 - [ ] Webhook retry with exponential backoff
 
 ### Phase 4: Enterprise Features (Week 4)
+
 - [ ] Verified domains (DNS TXT verification)
 - [ ] Enterprise SSO (SAML/OIDC) - placeholder for future
 - [ ] Custom session claims configuration
 - [ ] Inactivity timeout, session limits
 
 ### Phase 5: UI Components & DX (Week 5)
+
 - [ ] Drop-in auth components (SignIn, SignUp, UserButton)
 - [ ] OrganizationSwitcher, OrganizationProfile
 - [ ] AuthGuard for route protection
 - [ ] TypeScript types matching Clerk SDK
 
 ### Phase 6: Polish & Migration (Week 6)
+
 - [ ] Comprehensive test coverage
 - [ ] Documentation & migration guide
 - [ ] Performance optimization (Redis for session cache)
@@ -289,6 +305,7 @@ Build reusable React components (like Clerk's):
 ## Consequences
 
 **Positive:**
+
 - Production-grade multi-tenant auth matching Clerk capabilities
 - Flexible RBAC supports any business model
 - Self-hosted on Vercel + Supabase (cost control)
@@ -296,12 +313,14 @@ Build reusable React components (like Clerk's):
 - Clerk-compatible webhook payloads for easy migration
 
 **Negative:**
+
 - Significant development effort (6+ weeks)
 - Ongoing maintenance of auth infrastructure
 - Need to handle email/SMS delivery (use Resend/SendGrid + Twilio)
 - Responsibility for security patches and compliance
 
 **Risks:**
+
 - Session management complexity (mitigate with thorough testing)
 - Webhook reliability (mitigate with retry + dead letter queue)
 - RBAC performance at scale (mitigate with caching + database indexes)

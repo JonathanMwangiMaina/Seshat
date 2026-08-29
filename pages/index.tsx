@@ -23,7 +23,7 @@ export default function HomePage() {
   return (
     <div className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center bg-background p-4">
       <Loader2 className="h-12 w-12 animate-spin text-primary" />
-      <p className="mt-4 text-muted-foreground">Loading RetailPass...</p>
+      <p className="mt-4 text-muted-foreground">Loading Seshat...</p>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>RetailPass</title>
+        <title>Seshat</title>
         <meta
           name="description"
           content="Modern authentication platform with secure user registration, password strength analysis, and profile management built with Next.js"

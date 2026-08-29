@@ -14,7 +14,7 @@ const AppHeader = () => {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-primary">
             <ShieldCheck className="h-7 w-7" />
-            <span className="text-xl font-headline font-semibold">RetailPass</span>
+            <span className="text-xl font-headline font-semibold">Seshat</span>
           </Link>
         </div>
       </header>
