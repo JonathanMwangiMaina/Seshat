@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { useAuth } from '@/hooks/useAuth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, LockKeyhole, Mail } from 'lucide-react';
@@ -68,12 +69,11 @@ export default function LoginForm() {
                   Forgot password?
                 </Link>
               </div>
-              <div className="relative">
-                <LockKeyhole className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <FormControl>
-                  <Input type="password" placeholder="••••••••" {...field} className="pl-10" />
-                </FormControl>
-              </div>
+              <PasswordInput
+                leftIcon={<LockKeyhole className="h-4 w-4" />}
+                placeholder="••••••••"
+                {...field}
+              />
               <FormMessage />
             </FormItem>
           )}
